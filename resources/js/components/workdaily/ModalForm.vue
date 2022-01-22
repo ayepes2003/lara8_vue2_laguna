@@ -17,6 +17,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mb-3">
+                            <label for="fecharegistro">Fecha Registro</label>
                             <datepicker
                                 :bootstrap-styling="true"
                                 input-class="form-control"

@@ -3,7 +3,9 @@
         <h1 class="text-center">Trabajo Diario Corte</h1>
         <div class="col-12 mb-2">
             <!-- llamamos al componente para Crear   -->
-            <router-link :to="{ name: 'crearBlog' }" class="btn btn-success"
+            <router-link
+                :to="{ name: 'formcutcontrol' }"
+                class="btn btn-success"
                 ><i class="fas fa-plus-circle"></i
             ></router-link>
         </div>

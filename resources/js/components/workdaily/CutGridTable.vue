@@ -43,7 +43,7 @@
                                 :format="customFormatter"
                                 :value="openDate"
                                 :disabled-dates="{ to: new Date() }"
-                                v-model="fecharegistro"
+                                v-model="cutcontrol.fecharegistro"
                                 :required="true"
                             >
                             </datepicker>
@@ -55,7 +55,6 @@
                                 type="date"
                                 class="form-control"
                                 id="fecharegistro"
-                                placeholder="Fecha Registro"
                                 name=""
                                 value=""
                             />
@@ -251,21 +250,23 @@ export default {
     name: "cutgridtable",
     components: {
         Datepicker,
+        Dialog,
     },
     created() {
         this.list();
     },
     data() {
         return {
+            visible: false,
             cutcontrol: {
-                fecharegistro: moment(new Date()).format("YYYY-MM-d"),
+                fecharegistro: 0,
                 cortador: "",
                 lote: "",
                 product: "",
-                qtyempaque: 0.0,
-                qtybolsa: 0.0,
-                peso_bolsa: 0.0,
-                total_peso: 0.0,
+                qtyempaque: 0,
+                qtybolsa: 0,
+                peso_bolsa: 0,
+                total_peso: 0,
             },
             openDate: new Date(),
             id: 0,
@@ -277,7 +278,12 @@ export default {
     },
     props: {},
     methods: {
+        openDialog() {
+            this.visible = true; // Controla explícitamente el diálogo a través de los datos
+        },
+
         async list() {
+            console.log(this.$route);
             const api_url = "http://172.16.10.108:8001/api/cutcontrols";
             const res = await axios.get(api_url);
             this.cutcontrols = res.data;

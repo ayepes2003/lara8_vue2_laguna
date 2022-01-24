@@ -69,11 +69,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "products",
   created: function created() {},
   data: function data() {
-    return {};
+    return {
+      columns: [{
+        label: "id",
+        field: "id"
+      }, {
+        label: "Username",
+        field: "user.username",
+        headerClass: "class-in-header second-class"
+      }, {
+        label: "First Name",
+        field: "user.firstName"
+      }, {
+        label: "Last Name",
+        field: "user.lastName"
+      }, {
+        label: "Email",
+        field: "user.email"
+      }, {
+        label: "Address",
+        representedAs: function representedAs(_ref) {
+          var address = _ref.address,
+              city = _ref.city,
+              state = _ref.state;
+          return "".concat(address, "<br />").concat(city, ", ").concat(state);
+        },
+        interpolate: true
+      }],
+      rows: [//...
+      {
+        id: 1,
+        user: {
+          username: "dprice0",
+          firstName: "Daniel",
+          lastName: "Price",
+          email: "dprice0@blogs.com"
+        },
+        address: "3 Toban Park",
+        city: "Pocatello",
+        state: "Idaho"
+      } //...
+      ]
+    };
   },
   props: {},
   methods: {}

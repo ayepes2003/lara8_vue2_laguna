@@ -266,7 +266,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -280,14 +279,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       cutcontrol: {
-        fecharegistro: moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-d"),
+        fecharegistro: 0,
         cortador: "",
         lote: "",
         product: "",
-        qtyempaque: 0.0,
-        qtybolsa: 0.0,
-        peso_bolsa: 0.0,
-        total_peso: 0.0
+        qtyempaque: 0,
+        qtybolsa: 0,
+        peso_bolsa: 0,
+        total_peso: 0
       },
       openDate: new Date(),
       id: 0,
@@ -308,15 +307,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log(_this.$route);
                 api_url = "http://172.16.10.108:8001/api/cutcontrols";
-                _context.next = 3;
+                _context.next = 4;
                 return axios.get(api_url);
 
-              case 3:
+              case 4:
                 res = _context.sent;
                 _this.cutcontrols = res.data;
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -587,11 +587,11 @@ var render = function () {
                     required: true,
                   },
                   model: {
-                    value: _vm.fecharegistro,
+                    value: _vm.cutcontrol.fecharegistro,
                     callback: function ($$v) {
-                      _vm.fecharegistro = $$v
+                      _vm.$set(_vm.cutcontrol, "fecharegistro", $$v)
                     },
-                    expression: "fecharegistro",
+                    expression: "cutcontrol.fecharegistro",
                   },
                 }),
               ],
@@ -616,7 +616,6 @@ var render = function () {
                 attrs: {
                   type: "date",
                   id: "fecharegistro",
-                  placeholder: "Fecha Registro",
                   name: "",
                   value: "",
                 },

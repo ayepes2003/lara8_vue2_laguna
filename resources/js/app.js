@@ -11,13 +11,16 @@ import axios from "axios";
 import VueRouter from "vue-router";
 import { routes } from "./routes";
 
-//import HelloWorld from "./components/HelloWorld.vue";
 import formcutcontrol from "./components/workdaily/FormCutControl.vue";
 
 Vue.component("pagination", require("laravel-vue-pagination"));
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+
+// import { VuejsDatatableFactory } from "vuejs-datatable";
+
+// Vue.use(VuejsDatatableFactory);
 
 const router = new VueRouter({
     mode: "history",

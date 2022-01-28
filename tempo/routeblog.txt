@@ -1,0 +1,20 @@
+ {
+        name: "mostrarBlogs",
+        path: "/blogs",
+        component: Mostrar,
+    },
+    {
+        name: "crearBlog",
+        path: "/crear",
+        component: Crear,
+    },
+    {
+        name: "editarBlog",
+        path: "/editar/:id",
+        component: Editar,
+    },
+    {
+        name: "contacto",
+        path: "/contacto",
+        component: Contacto,
+    },

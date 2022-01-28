@@ -9,6 +9,7 @@ class CutControl extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'fecharegistro', 'cortador',
         'lote', 'empaque', 'product',

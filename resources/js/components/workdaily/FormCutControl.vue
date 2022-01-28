@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Crear Registro Corte {{ title }}</h4>
+                    <h4>Crear Registro Corte</h4>
                 </div>
                 <div class="card-body">
                     <form @submit.prevent="actualizar">
@@ -13,38 +13,33 @@
                                     <label for="fecharegistro"
                                         >Fecha Registro</label
                                     >
-                                    <datepicker
-                                        :bootstrap-styling="true"
-                                        input-class="form-control"
-                                        :format="customFormatter"
-                                        :disabled-dates="{ to: new Date() }"
-                                        v-model="cutcontrol.fecharegistro"
-                                        :required="true"
-                                    >
-                                    </datepicker>
-                                </div>
-                                <!-- <div class="form-group mb-3">
-                                    <label for="fecharegistro"
-                                        >Fecha Registro</label
-                                    >
                                     <input
                                         v-model="cutcontrol.fecharegistro"
                                         type="date"
                                         class="form-control"
                                         id="fecharegistro"
-                                        placeholder="Fecha Registro"
-                                        name=""
-                                        value=""
+                                        value="cutcontrol.fecharegistro"
                                     />
-                                </div> -->
+                                    <!-- <datepicker
+                                        :bootstrap-styling="true"
+                                        input-class="form-control"
+                                        :format="customFormatter"
+                                        :language="en"
+                                        :disabled-dates="{ to: new Date() }"
+                                        v-model="cutcontrol.fecharegistro"
+                                        :required="true"
+                                    >
+                                    </datepicker> -->
+                                </div>
+
                                 <div class="form-group mb-3">
                                     <label for="cutcontrol.cortador"
                                         >Nombre Cortador
-                                        {{ cutcontrol.cortador }}</label
+                                        {{ datoscortador.text }}</label
                                     >
                                     <VSelect
-                                        v-model="cutcontrol.cortador"
-                                        type="number"
+                                        v-model="datoscortador"
+                                        type="text"
                                         defaultTitle="Selecione Cortador"
                                         :options="employee_cut"
                                         id="employee_cut"
@@ -54,52 +49,34 @@
                                 <div class="form-group mb-3">
                                     <label for="empaque"
                                         >Tipo Empaque
-                                        {{ cutcontrol.lote }}
+                                        {{ datospacking.text }}
                                     </label>
-                                    <select
-                                        class="form-control"
-                                        v-model="cutcontrol.lote"
-                                    >
-                                        <option disabled value="">
-                                            Please select one
-                                        </option>
-                                        <option
-                                            v-for="siteTable in SiteTables"
-                                            v-bind:value="siteTable.List"
-                                            :key="siteTable.List"
-                                        >
-                                            {{ siteTable.siteLocation }}
-                                        </option>
-                                    </select>
-                                    <select
-                                        v-model="cutcontrol.empaque"
-                                        class="form-control"
-                                        id="empaque"
-                                        value="ICOPOR"
-                                    >
-                                        <option>CANASTILLA</option>
-                                        <option>ICOPOR</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="first_name">No Empaque</label>
-                                    <input
-                                        v-model="cutcontrol.qtyempaque"
-                                        type="number"
-                                        class="form-control"
-                                        id="qtyempaque"
-                                        placeholder="00"
-                                        name=""
-                                        value=""
+
+                                    <VSelect
+                                        v-model="datospacking"
+                                        defaultTitle="Selecione Tipo Empaque"
+                                        :options="type_packing"
+                                        id="type_packing"
+                                        requerid
                                     />
                                 </div>
+                                <!-- <div class="form-group mb-3">
+                                    <label for="cutcontrol.qtyempaque"
+                                        >No Empaque</label
+                                    >
+                                    <input
+                                        v-model="cutcontrol.qtyempaque"
+                                        value="1"
+                                        class="form-control"
+                                        id="qtyempaque"
+                                    />
+                                </div> -->
                                 <div class="form-group mb-3">
                                     <label for="lote1"
-                                        >No Lote {{ cutcontrol.lote }}</label
+                                        >No Lote {{ datoslote.text }}</label
                                     >
                                     <VSelect
-                                        v-model="cutcontrol.lote"
-                                        type="number"
+                                        v-model="datoslote"
                                         defaultTitle="Selecione Lote"
                                         :options="lote_box"
                                         id="lote"
@@ -109,35 +86,37 @@
 
                                 <div class="form-group mb-3">
                                     <label for="cutcontrol.product"
-                                        >Producto</label
+                                        >Producto {{ datosproduct.text }}</label
                                     >
                                     <VSelect
-                                        v-model="cutcontrol.product"
-                                        type="number"
+                                        v-model="datosproduct"
                                         defaultTitle="Selecione Producto"
                                         :options="products_box"
                                         id="product"
                                         requerid
                                     />
                                 </div>
-
+                                <div class="form-group mb-3">
+                                    <label for="peso_bolsa"
+                                        >Peso Bolsa
+                                        {{ datosbolsa.text }} gr</label
+                                    >
+                                    <VSelect
+                                        v-model="datosbolsa"
+                                        defaultTitle="Seleccione Peso Bolsa"
+                                        :options="weight_box"
+                                        id="peso_bolsa"
+                                        requerid
+                                    />
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="qtybolsa">Cantidad Bolsa</label>
                                     <input
+                                        @click="select"
                                         v-model="cutcontrol.qtybolsa"
                                         type="number"
                                         class="form-control"
                                         id="qtybolsa"
-                                    />
-                                </div>
-                                <div class="form-group mb-3 disable">
-                                    <label for="peso_bolsa">Peso Bolsa</label>
-                                    <VSelect
-                                        v-model="cutcontrol.peso_bolsa"
-                                        :options="weight_box"
-                                        type="number"
-                                        id="peso_bolsa"
-                                        requerid
                                     />
                                 </div>
                             </div>
@@ -145,12 +124,8 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar
-                    </button>
-
                     <button
-                        @click="changedata()"
+                        @click="cleardata()"
                         type="button"
                         class="btn btn-primary"
                         data-bs-dismiss="modal"
@@ -189,115 +164,17 @@ export default {
         Datepicker,
         VSelect,
     },
-    props: {
-        title: String,
-    },
     data() {
         return {
-            weight_box: [
-                {
-                    value: 1,
-                    text: "<i class='fa fa-circle' style='color:green;'></i> 460 gr",
-                },
-                {
-                    value: 0,
-                    text: "<i class='fa fa-circle' style='color:red;'></i>500 gr",
-                },
-            ],
-            products_box: [
-                {
-                    value: 1,
-                    text: "<i class='fa fa-circle' style='color:green;'>Albaca</i>",
-                },
-                {
-                    value: 2,
-                    text: "<i class='fa fa-circle' style='color:red;'>Tomillo</i>",
-                },
-            ],
-            employee_cut: [
-                {
-                    value: 1,
-                    text: "<i class='fa fa-circle' style='color:green;'>Francisco Perez</i>",
-                },
-                {
-                    value: 2,
-                    text: "<i class='fa fa-circle' style='color:blue;'>Esperanza Galido</i>",
-                },
-                {
-                    value: 3,
-                    text: "<i class='fa fa-circle' style='color:orange;'>Juan Restrepo</i>",
-                },
-            ],
-            lote_box: [
-                {
-                    id: 1,
-                    text: "<i class='fa fa-circle' style='color:green;'>24</i>",
-                },
-                {
-                    id: 2,
-                    text: "<i class='fa fa-circle' style='color:blue;'>25</i>",
-                },
-                {
-                    id: 3,
-                    text: "<i class='fa fa-circle' style='color:orange;'>4L</i>",
-                },
-            ],
-            SiteTables: [
-                {
-                    siteLocation: "Auckland",
-                    cloudLocalHopOff: "Melbourne",
-                    List: 1,
-                },
-                {
-                    siteLocation: "Hong Kong",
-                    cloudLocalHopOff: "Hong Kong",
-                    List: 2,
-                },
-                {
-                    siteLocation: "Jakarta",
-                    cloudLocalHopOff: "Singapore",
-                    List: 3,
-                },
-                {
-                    siteLocation: "London",
-                    cloudLocalHopOff: "Melbourne",
-                    List: 4,
-                },
-                {
-                    siteLocation: "Los Angeles",
-                    cloudLocalHopOff: "Hong Kong",
-                    List: 5,
-                },
-                {
-                    siteLocation: "Melbourne",
-                    cloudLocalHopOff: "London",
-                    List: 6,
-                },
-                {
-                    siteLocation: "New York",
-                    cloudLocalHopOff: "New York",
-                    List: 7,
-                },
-                {
-                    siteLocation: "Shanghai",
-                    cloudLocalHopOff: "Los Angeles",
-                    List: 8,
-                },
-                {
-                    siteLocation: "Singapure",
-                    cloudLocalHopOff: "Melbourne",
-                    List: 9,
-                },
-            ],
-
             cutcontrol: {
-                fecharegistro: 0,
+                fecharegistro: "",
                 cortador: "",
-                lote: 0,
-                product: 0,
+                lote: "",
+                product: "",
                 qtyempaque: 0,
+                empaque: "ICOPOR",
                 qtybolsa: 0,
-                peso_bolsa: { value: null },
+                peso_bolsa: 0,
                 total_peso: 0,
             },
 
@@ -306,35 +183,141 @@ export default {
             modal: 0,
             titleModal: "",
             cutcontrols: [],
+            datospacking: [
+                {
+                    value: 0,
+                    text: "",
+                },
+            ],
+            datoslote: [
+                {
+                    value: 0,
+                    text: "",
+                },
+            ],
+            datosbolsa: [
+                {
+                    value: 0,
+                    text: "",
+                },
+            ],
+            datosproduct: [
+                {
+                    value: 0,
+                    text: "",
+                },
+            ],
+            datoscortador: [
+                {
+                    value: 0,
+                    text: "",
+                },
+            ],
+            weight_box: [
+                {
+                    value: 1,
+                    text: "460",
+                },
+                {
+                    value: 0,
+                    text: "500",
+                },
+            ],
+
+            products_box: [
+                {
+                    value: 1,
+                    text: "Albaca",
+                },
+                {
+                    value: 2,
+                    text: "Tomillo",
+                },
+            ],
+            employee_cut: [
+                {
+                    value: 1,
+                    text: "Francisco Perez",
+                },
+                {
+                    value: 2,
+                    text: "Esperanza Galido",
+                },
+                {
+                    value: 3,
+                    text: "Juan Restrepo",
+                },
+            ],
+            lote_box: [
+                {
+                    value: 1,
+                    text: "24",
+                },
+                {
+                    value: 2,
+                    text: "25",
+                },
+                {
+                    value: 3,
+                    text: "4L",
+                },
+            ],
+            type_packing: [
+                {
+                    value: 1,
+                    text: "ICOPOR",
+                },
+                {
+                    value: 2,
+                    text: "CANASTILLA",
+                },
+            ],
         };
     },
+    computed: {},
     created() {},
     mounted() {
-        // openDate: new Date();
-        this.mostrarBlog();
+        console.log(process.env.VUE_APP_RUTA_API);
     },
     methods: {
+        select: function (event) {
+            event.target.setSelectionRange(0, this.text.length);
+        },
         customFormatter(date) {
             return moment(date).format("yyyy-MM-dd");
         },
-        async mostrarBlog() {
-            console.log(this.$route);
-        },
-        async actualizar() {
-            console.log(this.$route);
+
+        async closeModal() {
+            this.$router.push({ name: "controlcorte" });
         },
         async save() {
-            console.log(this.cutcontrol.lote);
+            (this.cutcontrol.cortador = this.datoscortador.value),
+                (this.cutcontrol.lote = this.datoslote.text),
+                (this.cutcontrol.empaque = this.datospacking.text),
+                (this.cutcontrol.product = this.datosproduct.text),
+                (this.cutcontrol.peso_bolsa = this.datosbolsa.text),
+                (this.cutcontrol.qtyempaque = 1),
+                (this.cutcontrol.total_peso =
+                    this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa);
+            console.log(this.cutcontrol);
+            this.crear();
         },
         async crear() {
             await this.axios
-                .post("/api/cutcontrols", this.cutcontrol)
+                .post(
+                    "http://172.16.10.108:8001/api/cutcontrols",
+                    this.cutcontrol
+                )
                 .then((response) => {
-                    this.$router.push({ name: "cutcontrols" });
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+            (this.qtybolsa = 0),
+                (this.peso_bolsa = 0),
+                (this.total_peso = 0),
+                (this.datosbolsa.value = 0);
         },
     },
 };

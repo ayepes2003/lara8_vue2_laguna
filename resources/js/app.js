@@ -11,16 +11,16 @@ import axios from "axios";
 import VueRouter from "vue-router";
 import { routes } from "./routes";
 
-import formcutcontrol from "./components/workdaily/FormCutControl.vue";
-
+import vSelect from "vue-select";
 Vue.component("pagination", require("laravel-vue-pagination"));
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
-// import { VuejsDatatableFactory } from "vuejs-datatable";
+import formcutcontrol from "./components/workdaily/FormCutControl.vue";
+import Dialog from "./components/comun/Dialog.vue";
 
-// Vue.use(VuejsDatatableFactory);
+export const RUTA_SERVIDOR = process.env.VUE_APP_RUTA_API;
 
 const router = new VueRouter({
     mode: "history",

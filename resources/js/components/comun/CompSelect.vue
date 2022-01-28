@@ -7,6 +7,7 @@
 
 <script>
 import Advanced-Search from 'vue-advanced-search'
+
 export default {
   components: { AdvancedSearch },
   data () {

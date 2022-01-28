@@ -38,7 +38,13 @@ class CutControlController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $CutControl = CutControl::create($request->post());
+
+        return response()->json([
+            'CutControl' => $CutControl
+        ]);
     }
 
     /**

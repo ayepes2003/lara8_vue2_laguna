@@ -20,17 +20,19 @@
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
         "vue": "^2.6.12",
-        "vue-loader": "^15.9.7",
-        "vue-template-compiler": "^2.6.12"
+        "vue-loader": "^15.9.8",
+        "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
         "boostrap": "^2.0.0",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.1",
+        "vee-validate": "^3.4.14",
         "vue": "^2.6.14",
         "vue-advanced-search": "^0.1.43",
         "vue-axios": "^3.4.0",
         "vue-router": "^3.5.3",
+        "vue-select": "^3.16.0",
         "vue-select-picker-bootstrap": "^1.0.5",
         "vue-step-wizard": "^0.1.17",
         "vue-tables-2": "^2.3.5",

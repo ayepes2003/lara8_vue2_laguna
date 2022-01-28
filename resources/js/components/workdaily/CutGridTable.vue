@@ -250,9 +250,9 @@ export default {
     name: "cutgridtable",
     components: {
         Datepicker,
-        Dialog,
     },
     created() {
+        console.log(process.env.VUE_APP_RUTA_API);
         this.list();
     },
     data() {
@@ -283,7 +283,7 @@ export default {
         },
 
         async list() {
-            console.log(this.$route);
+            // console.log(this.$route);
             const api_url = "http://172.16.10.108:8001/api/cutcontrols";
             const res = await axios.get(api_url);
             this.cutcontrols = res.data;

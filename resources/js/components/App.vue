@@ -108,4 +108,4 @@
 <script>
 export default {};
 </script>
-<style src="vue-advanced-search/dist/AdvancedSearch.css"></style>
+<style></style>

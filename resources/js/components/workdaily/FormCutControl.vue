@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Crear Registro Corte</h4>
+                    <h4 class="text-danger">Crear Registro Corte</h4>
                 </div>
                 <div class="card-body">
                     <form @submit.prevent="actualizar">
@@ -35,10 +35,10 @@
                                 <div class="form-group mb-3">
                                     <label for="cutcontrol.cortador"
                                         >Nombre Cortador
-                                        {{ datoscortador.text }}</label
+                                        <span class="text-primary">{{ cutcontrol.datoscortador && cutcontrol.datoscortador.text }}</span></label
                                     >
                                     <VSelect
-                                        v-model="datoscortador"
+                                        v-model="cutcontrol.datoscortador"
                                         type="text"
                                         defaultTitle="Selecione Cortador"
                                         :options="employee_cut"
@@ -53,7 +53,7 @@
                                     </label>
 
                                     <VSelect
-                                        v-model="datospacking"
+                                        v-model="cutcontrol.datospacking"
                                         defaultTitle="Selecione Tipo Empaque"
                                         :options="type_packing"
                                         id="type_packing"
@@ -76,7 +76,7 @@
                                         >No Lote {{ datoslote.text }}</label
                                     >
                                     <VSelect
-                                        v-model="datoslote"
+                                        v-model="cutcontrol.datoslote"
                                         defaultTitle="Selecione Lote"
                                         :options="lote_box"
                                         id="lote"
@@ -89,7 +89,7 @@
                                         >Producto {{ datosproduct.text }}</label
                                     >
                                     <VSelect
-                                        v-model="datosproduct"
+                                        v-model="cutcontrol.datosproduct"
                                         defaultTitle="Selecione Producto"
                                         :options="products_box"
                                         id="product"
@@ -102,7 +102,7 @@
                                         {{ datosbolsa.text }} gr</label
                                     >
                                     <VSelect
-                                        v-model="datosbolsa"
+                                        v-model="cutcontrol.datosbolsa"
                                         defaultTitle="Seleccione Peso Bolsa"
                                         :options="weight_box"
                                         id="peso_bolsa"
@@ -141,12 +141,14 @@
                         Cerrar
                     </button>
                     <button
-                        @click="save()"
+                        :disabled="validateForm ? !validateForm : 'disabled'"
+                        @click="crear()"
                         type="button"
                         class="btn btn-success"
                     >
                         Guardar
                     </button>
+
                 </div>
             </div>
         </div>
@@ -167,15 +169,15 @@ export default {
     data() {
         return {
             cutcontrol: {
-                fecharegistro: "",
-                cortador: "",
-                lote: "",
-                product: "",
-                qtyempaque: 0,
-                empaque: "ICOPOR",
-                qtybolsa: 0,
-                peso_bolsa: 0,
-                total_peso: 0,
+                // fecharegistro: "",
+                // cortador: "",
+                // lote: "",
+                // product: "",
+                // qtyempaque: 0,
+                // empaque: "ICOPOR",
+                // qtybolsa: 0,
+                // peso_bolsa: 0,
+                // total_peso: 0,
             },
 
             id: 0,
@@ -290,25 +292,84 @@ export default {
         async closeModal() {
             this.$router.push({ name: "controlcorte" });
         },
-        async save() {
-            (this.cutcontrol.cortador = this.datoscortador.value),
-                (this.cutcontrol.lote = this.datoslote.text),
-                (this.cutcontrol.empaque = this.datospacking.text),
-                (this.cutcontrol.product = this.datosproduct.text),
-                (this.cutcontrol.peso_bolsa = this.datosbolsa.text),
-                (this.cutcontrol.qtyempaque = 1),
-                (this.cutcontrol.total_peso =
-                    this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa);
-            console.log(this.cutcontrol);
-            this.crear();
-        },
+        // async save() {
+        //     (this.cutcontrol.cortador = this.datoscortador.value),
+        //         (this.cutcontrol.lote = this.datoslote.text),
+        //         (this.cutcontrol.empaque = this.datospacking.text),
+        //         (this.cutcontrol.product = this.datosproduct.text),
+        //         (this.cutcontrol.peso_bolsa = this.datosbolsa.text),
+        //         (this.cutcontrol.qtyempaque = 1),
+        //         (this.cutcontrol.total_peso =
+        //             this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa);
+        //     console.log(this.cutcontrol);
+        //     this.crear();
+        // },
         async crear() {
+
+            // Validaciones 
+            if (!this.cutcontrol.fecharegistro) {
+                this.customAlert("Debe indicar una fecha de registro.")
+                return
+            }
+            if (!this.cutcontrol.datoscortador) {
+                this.customAlert("Debe indicar un cortador.")
+                return
+            }
+            if (!this.cutcontrol.datospacking) {
+                this.customAlert("Debe indicar un packig.")
+                return
+            }
+
+            if (!this.cutcontrol.datoslote) {
+                this.customAlert("Debe indicar un lote.")
+                return
+            }
+
+            if (!this.cutcontrol.datosproduct) {
+                this.customAlert("Debe indicar un producto.")
+                return
+            }
+
+
+            if (!this.cutcontrol.datosbolsa) {
+                this.customAlert("Debe indicar el dato de la bolsa.")
+                return
+            }
+
+            if (!this.cutcontrol.qtybolsa || this.cutcontrol.qtybolsa < 1 || this.cutcontrol.qtybolsa > 99) {
+                this.customAlert("Debe indicar el dato de la bolsa.")
+                return
+            }
+
+            // custom request
+            this.cutcontrol.cortador = this.cutcontrol.datoscortador.value
+            this.cutcontrol.lote = this.cutcontrol.datoslote.text
+            this.cutcontrol.empaque = this.cutcontrol.datospacking.text
+            this.cutcontrol.product = this.cutcontrol.datosproduct.text
+            this.cutcontrol.peso_bolsa = this.cutcontrol.datosbolsa.text
+            this.cutcontrol.qtyempaque = 1
+            this.cutcontrol.total_peso = this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa
+
+
+
+ 
             await this.axios
                 .post(
-                    "http://172.16.10.108:8001/api/cutcontrols",
+                    "/api/cutcontrols",
                     this.cutcontrol
                 )
                 .then((response) => {
+
+                    if (response.data.code == 200) {
+                        this.customAlert(response.data.message)
+                        this.cutcontrol.datosbolsa = null
+                        this.cutcontrol.qtybolsa = null 
+                        
+
+
+                    }else{
+                        this.customAlert(response.data.message)
+                    }
                     console.log(response.data);
                 })
                 .catch((error) => {
@@ -319,6 +380,49 @@ export default {
                 (this.total_peso = 0),
                 (this.datosbolsa.value = 0);
         },
+        customAlert(str){
+            alert(str);
+        }
     },
+    computed: {
+        validateForm(){
+            if (!this.cutcontrol.fecharegistro) {
+                // this.customAlert("Debe indicar una fecha de registro.")
+                return false
+            }
+            if (!this.cutcontrol.datoscortador) {
+                // this.customAlert("Debe indicar un cortador.")
+                return false
+            }
+            if (!this.cutcontrol.datospacking) {
+                // this.customAlert("Debe indicar un packig.")
+                return false
+            }
+
+            if (!this.cutcontrol.datoslote) {
+                // this.customAlert("Debe indicar un lote.")
+                return false
+            }
+
+            if (!this.cutcontrol.datosproduct) {
+                // this.customAlert("Debe indicar un producto.")
+                return false
+            }
+
+
+            if (!this.cutcontrol.datosbolsa) {
+                // this.customAlert("Debe indicar el dato de la bolsa.")
+                return false
+            }
+
+            if (!this.cutcontrol.qtybolsa || this.cutcontrol.qtybolsa < 1 || this.cutcontrol.qtybolsa > 99 ){
+                // this.customAlert("Debe indicar el dato de la bolsa.")
+                return false
+            }
+
+
+            return true
+        }
+    }
 };
 </script>

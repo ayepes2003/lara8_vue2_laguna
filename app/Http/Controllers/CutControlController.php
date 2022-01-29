@@ -40,11 +40,25 @@ class CutControlController extends Controller
     {
 
 
-        $CutControl = CutControl::create($request->post());
+        try {
+            //code...
+            $CutControl = CutControl::create($request->post());
+    
+            return response()->json([
+                'cutControl' => $CutControl,
+                'code' => 200,
+                'message' => 'Registro guardado.',
 
-        return response()->json([
-            'CutControl' => $CutControl
-        ]);
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'cutControl' => "",
+                'code' => 500,
+                'message' => $th->getMessage(),
+
+            ]);
+        }
+
     }
 
     /**

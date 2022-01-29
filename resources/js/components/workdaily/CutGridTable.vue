@@ -284,7 +284,7 @@ export default {
 
         async list() {
             // console.log(this.$route);
-            const api_url = "http://172.16.10.108:8001/api/cutcontrols";
+            const api_url = "/api/cutcontrols";
             const res = await axios.get(api_url);
             this.cutcontrols = res.data;
         },

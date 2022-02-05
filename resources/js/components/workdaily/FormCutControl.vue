@@ -1,12 +1,13 @@
 <template>
     <div class="row">
         <div class="col-12">
+            <notifications position="top center" />
             <div class="card">
                 <div class="card-header">
                     <h4 class="text-danger">Crear Registro Corte</h4>
                 </div>
                 <div class="card-body">
-                    <form @submit.prevent="actualizar">
+                    <form @submit.prevent="crear">
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="form-group mb-3">
@@ -35,7 +36,10 @@
                                 <div class="form-group mb-3">
                                     <label for="cutcontrol.cortador"
                                         >Nombre Cortador
-                                        <span class="text-primary">{{ cutcontrol.datoscortador && cutcontrol.datoscortador.text }}</span></label
+                                        <span class="text-primary">{{
+                                            cutcontrol.datoscortador &&
+                                            cutcontrol.datoscortador.text
+                                        }}</span></label
                                     >
                                     <VSelect
                                         v-model="cutcontrol.datoscortador"
@@ -112,7 +116,6 @@
                                 <div class="form-group mb-3">
                                     <label for="qtybolsa">Cantidad Bolsa</label>
                                     <input
-                                        @click="select"
                                         v-model="cutcontrol.qtybolsa"
                                         type="number"
                                         class="form-control"
@@ -124,14 +127,6 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button
-                        @click="cleardata()"
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                    >
-                        Limpiar Datos
-                    </button>
                     <button
                         @click="closeModal()"
                         type="button"
@@ -148,7 +143,6 @@
                     >
                         Guardar
                     </button>
-
                 </div>
             </div>
         </div>
@@ -169,15 +163,7 @@ export default {
     data() {
         return {
             cutcontrol: {
-                // fecharegistro: "",
-                // cortador: "",
-                // lote: "",
-                // product: "",
-                // qtyempaque: 0,
-                // empaque: "ICOPOR",
-                // qtybolsa: 0,
-                // peso_bolsa: 0,
-                // total_peso: 0,
+                empaque: "ICOPOR",
             },
 
             id: 0,
@@ -185,36 +171,11 @@ export default {
             modal: 0,
             titleModal: "",
             cutcontrols: [],
-            datospacking: [
-                {
-                    value: 0,
-                    text: "",
-                },
-            ],
-            datoslote: [
-                {
-                    value: 0,
-                    text: "",
-                },
-            ],
-            datosbolsa: [
-                {
-                    value: 0,
-                    text: "",
-                },
-            ],
-            datosproduct: [
-                {
-                    value: 0,
-                    text: "",
-                },
-            ],
-            datoscortador: [
-                {
-                    value: 0,
-                    text: "",
-                },
-            ],
+            datospacking: [],
+            datoslote: [],
+            datosbolsa: [],
+            datosproduct: [],
+            datoscortador: [],
             weight_box: [
                 {
                     value: 1,
@@ -282,9 +243,6 @@ export default {
         console.log(process.env.VUE_APP_RUTA_API);
     },
     methods: {
-        select: function (event) {
-            event.target.setSelectionRange(0, this.text.length);
-        },
         customFormatter(date) {
             return moment(date).format("yyyy-MM-dd");
         },
@@ -292,137 +250,121 @@ export default {
         async closeModal() {
             this.$router.push({ name: "controlcorte" });
         },
-        // async save() {
-        //     (this.cutcontrol.cortador = this.datoscortador.value),
-        //         (this.cutcontrol.lote = this.datoslote.text),
-        //         (this.cutcontrol.empaque = this.datospacking.text),
-        //         (this.cutcontrol.product = this.datosproduct.text),
-        //         (this.cutcontrol.peso_bolsa = this.datosbolsa.text),
-        //         (this.cutcontrol.qtyempaque = 1),
-        //         (this.cutcontrol.total_peso =
-        //             this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa);
-        //     console.log(this.cutcontrol);
-        //     this.crear();
-        // },
-        async crear() {
 
-            // Validaciones 
+        async crear() {
+            // Validaciones
             if (!this.cutcontrol.fecharegistro) {
-                this.customAlert("Debe indicar una fecha de registro.")
-                return
+                this.customAlert("Debe indicar una fecha de registro.", "warn");
+                return;
             }
             if (!this.cutcontrol.datoscortador) {
-                this.customAlert("Debe indicar un cortador.")
-                return
+                this.customAlert("Debe indicar un cortador.", "warn");
+                return;
             }
             if (!this.cutcontrol.datospacking) {
-                this.customAlert("Debe indicar un packig.")
-                return
+                this.customAlert("Debe indicar un packig.", "warn");
+                return;
             }
 
             if (!this.cutcontrol.datoslote) {
-                this.customAlert("Debe indicar un lote.")
-                return
+                this.customAlert("Debe indicar un lote.", "warn");
+                return;
             }
 
             if (!this.cutcontrol.datosproduct) {
-                this.customAlert("Debe indicar un producto.")
-                return
+                this.customAlert("Debe indicar un producto.", "warn");
+                return;
             }
-
 
             if (!this.cutcontrol.datosbolsa) {
-                this.customAlert("Debe indicar el dato de la bolsa.")
-                return
+                this.customAlert("Debe indicar el dato de la bolsa.", "warn");
+                return;
             }
 
-            if (!this.cutcontrol.qtybolsa || this.cutcontrol.qtybolsa < 1 || this.cutcontrol.qtybolsa > 99) {
-                this.customAlert("Debe indicar el dato de la bolsa.")
-                return
+            if (
+                !this.cutcontrol.qtybolsa ||
+                this.cutcontrol.qtybolsa < 1 ||
+                this.cutcontrol.qtybolsa > 99
+            ) {
+                this.customAlert("Cantidad Bolsa Errada", "warn");
+                return;
             }
 
             // custom request
-            this.cutcontrol.cortador = this.cutcontrol.datoscortador.value
-            this.cutcontrol.lote = this.cutcontrol.datoslote.text
-            this.cutcontrol.empaque = this.cutcontrol.datospacking.text
-            this.cutcontrol.product = this.cutcontrol.datosproduct.text
-            this.cutcontrol.peso_bolsa = this.cutcontrol.datosbolsa.text
-            this.cutcontrol.qtyempaque = 1
-            this.cutcontrol.total_peso = this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa
+            this.cutcontrol.cortador = this.cutcontrol.datoscortador.value;
+            this.cutcontrol.lote = this.cutcontrol.datoslote.text;
+            this.cutcontrol.empaque = this.cutcontrol.datospacking.text;
+            this.cutcontrol.product = this.cutcontrol.datosproduct.text;
+            this.cutcontrol.peso_bolsa = this.cutcontrol.datosbolsa.text;
+            this.cutcontrol.qtyempaque = 1;
+            this.cutcontrol.total_peso =
+                this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa;
 
-
-
- 
             await this.axios
-                .post(
-                    "/api/cutcontrols",
-                    this.cutcontrol
-                )
+                .post("/api/cutcontrols", this.cutcontrol)
                 .then((response) => {
-
                     if (response.data.code == 200) {
-                        this.customAlert(response.data.message)
-                        this.cutcontrol.datosbolsa = null
-                        this.cutcontrol.qtybolsa = null 
-                        
-
-
-                    }else{
-                        this.customAlert(response.data.message)
+                        this.customAlert(response.data.message, "success");
+                        this.cutcontrol.datosbolsa = null;
+                        this.cutcontrol.qtybolsa = null;
+                    } else {
+                        this.customAlert(response.data.message, "error");
                     }
                     console.log(response.data);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-            (this.qtybolsa = 0),
-                (this.peso_bolsa = 0),
-                (this.total_peso = 0),
-                (this.datosbolsa.value = 0);
         },
-        customAlert(str){
-            alert(str);
-        }
+        customAlert(str, type) {
+            this.$notify({
+                type: type,
+                title: "Sistema agroOnline",
+                text: str,
+            });
+            // alert(str);
+        },
     },
     computed: {
-        validateForm(){
+        validateForm() {
             if (!this.cutcontrol.fecharegistro) {
                 // this.customAlert("Debe indicar una fecha de registro.")
-                return false
+                return false;
             }
             if (!this.cutcontrol.datoscortador) {
                 // this.customAlert("Debe indicar un cortador.")
-                return false
+                return false;
             }
             if (!this.cutcontrol.datospacking) {
                 // this.customAlert("Debe indicar un packig.")
-                return false
+                return false;
             }
 
             if (!this.cutcontrol.datoslote) {
                 // this.customAlert("Debe indicar un lote.")
-                return false
+                return false;
             }
 
             if (!this.cutcontrol.datosproduct) {
                 // this.customAlert("Debe indicar un producto.")
-                return false
+                return false;
             }
-
 
             if (!this.cutcontrol.datosbolsa) {
                 // this.customAlert("Debe indicar el dato de la bolsa.")
-                return false
+                return false;
             }
 
-            if (!this.cutcontrol.qtybolsa || this.cutcontrol.qtybolsa < 1 || this.cutcontrol.qtybolsa > 99 ){
-                // this.customAlert("Debe indicar el dato de la bolsa.")
-                return false
+            if (
+                !this.cutcontrol.qtybolsa ||
+                this.cutcontrol.qtybolsa < 1 ||
+                this.cutcontrol.qtybolsa > 99
+            ) {
+                return false;
             }
 
-
-            return true
-        }
-    }
+            return true;
+        },
+    },
 };
 </script>

@@ -14,8 +14,13 @@ import { routes } from "./routes";
 import vSelect from "vue-select";
 Vue.component("pagination", require("laravel-vue-pagination"));
 
+Vue.use(Notifications);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+
+import Notifications from "vue-notification";
+
+const Header = () => import("./components/layout/Header.vue");
 
 import formcutcontrol from "./components/workdaily/FormCutControl.vue";
 import Dialog from "./components/comun/Dialog.vue";

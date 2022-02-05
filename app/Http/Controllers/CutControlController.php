@@ -14,11 +14,11 @@ class CutControlController extends Controller
      */
     public function index()
     {
-        $cutcontrol = CutControl::orderBy('id', 'desc')->get();
-
-
+        $cutcontrol = CutControl::orderBy('id', 'desc')->paginate(20);
+        //->paginate(10);
         return response()->json($cutcontrol);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,7 +43,7 @@ class CutControlController extends Controller
         try {
             //code...
             $CutControl = CutControl::create($request->post());
-    
+
             return response()->json([
                 'cutControl' => $CutControl,
                 'code' => 200,
@@ -58,7 +58,6 @@ class CutControlController extends Controller
 
             ]);
         }
-
     }
 
     /**
@@ -104,5 +103,20 @@ class CutControlController extends Controller
     public function destroy(CutControl $cutControl)
     {
         //
+    }
+
+
+
+    public function get($page, $limit)
+    {
+        $cutcontrolpage = CutControl::offset(($page - 1) * $limit)->take($limit)->get();
+        return response()->json($cutcontrolpage);
+    }
+
+    public function register_transdate(Request $request)
+    {
+        dd($request);
+        $cutcontrol = CutControl::where('fecharegistro', '=', now())->get();
+        return response()->json($cutcontrol);
     }
 }

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\CutControl;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use App\Http\Resources\CutControllResource;
 
 class CutControlController extends Controller
 {
@@ -14,9 +18,13 @@ class CutControlController extends Controller
      */
     public function index()
     {
-        $cutcontrol = CutControl::orderBy('id', 'desc')->paginate(20);
-        //->paginate(10);
-        return response()->json($cutcontrol);
+
+
+        //$cutcontrol =
+        //->paginate(20)
+        return CutControllResource::collection(
+            CutControl::orderBy('id', 'desc')->get()
+        );
     }
 
 
@@ -38,24 +46,20 @@ class CutControlController extends Controller
      */
     public function store(Request $request)
     {
-
-
         try {
-            //code...
-            $CutControl = CutControl::create($request->post());
 
-            return response()->json([
-                'cutControl' => $CutControl,
-                'code' => 200,
-                'message' => 'Registro guardado.',
+            return (new CutControllResource(
+                CutControl::create($request->post())
+            ))->additional([
 
+                'code' => Response::HTTP_OK,
+                'msg' => 'Registro Guardado',
             ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'cutControl' => "",
                 'code' => 500,
                 'message' => $th->getMessage(),
-
             ]);
         }
     }

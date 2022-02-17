@@ -5381,6 +5381,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -5602,17 +5617,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -5686,8 +5690,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     console.log(process.env.VUE_APP_RUTA_API);
   },
   methods: {
+    beforeUpdate: function beforeUpdate() {},
     customFormatter: function customFormatter(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("yyyy-MM-dd");
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("yyyy-MM-d");
     },
     closeModal: function closeModal() {
       var _this = this;
@@ -5717,76 +5722,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (_this2.cutcontrol.fecharegistro) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar una fecha de registro.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 3:
-                if (_this2.cutcontrol.datoscortador) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar un cortador.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 6:
-                if (_this2.cutcontrol.datospacking) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar un packig.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 9:
-                if (_this2.cutcontrol.datoslote) {
-                  _context2.next = 12;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar un lote.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 12:
-                if (_this2.cutcontrol.datosproduct) {
-                  _context2.next = 15;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar un producto.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 15:
-                if (_this2.cutcontrol.datosbolsa) {
-                  _context2.next = 18;
-                  break;
-                }
-
-                _this2.customAlert("Debe indicar el dato de la bolsa.", "warn");
-
-                return _context2.abrupt("return");
-
-              case 18:
-                if (!(!_this2.cutcontrol.qtybolsa || _this2.cutcontrol.qtybolsa < 1 || _this2.cutcontrol.qtybolsa > 99)) {
-                  _context2.next = 21;
-                  break;
-                }
-
-                _this2.customAlert("Cantidad Bolsa Errada", "warn");
-
-                return _context2.abrupt("return");
-
-              case 21:
                 // custom request
                 _this2.cutcontrol.cortador = _this2.cutcontrol.datoscortador.value;
                 _this2.cutcontrol.lote = _this2.cutcontrol.datoslote.text;
@@ -5795,13 +5730,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.cutcontrol.peso_bolsa = _this2.cutcontrol.datosbolsa.text;
                 _this2.cutcontrol.qtyempaque = 1;
                 _this2.cutcontrol.total_peso = _this2.cutcontrol.qtybolsa * _this2.cutcontrol.peso_bolsa;
-                _context2.next = 30;
-                return _this2.axios.post("/api/cutcontrols", _this2.cutcontrol).then(function (response) {
+                _context2.next = 9;
+                return _this2.axios.post("/api/v1/cutcontrols", _this2.cutcontrol).then(function (response) {
                   if (response.data.code == 200) {
-                    _this2.customAlert(response.data.message, "success");
+                    _this2.customAlert(response.data.message, "\n success");
 
                     _this2.cutcontrol.datosbolsa = null;
                     _this2.cutcontrol.qtybolsa = null;
+                    _this2.cutcontrol.fecharegistro = new date();
                   } else {
                     _this2.customAlert(response.data.message, "error");
                   }
@@ -5811,7 +5747,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 30:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -5829,11 +5765,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   }
 }, "computed", {
   validateForm: function validateForm() {
-    if (!this.cutcontrol.fecharegistro) {
-      // this.customAlert("Debe indicar una fecha de registro.")
-      return false;
-    }
-
+    // if (!this.cutcontrol.fecharegistro) {
+    //     // this.customAlert("Debe indicar una fecha de registro.")
+    //     return false;
+    // }
     if (!this.cutcontrol.datoscortador) {
       // this.customAlert("Debe indicar un cortador.")
       return false;
@@ -51772,6 +51707,44 @@ var render = function () {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-link",
+                        attrs: {
+                          "exact-active-class": "active",
+                          to: "/controlcorte",
+                        },
+                      },
+                      [_vm._v("Registro Corte")]
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-link",
+                        attrs: {
+                          "exact-active-class": "active",
+                          to: "/controlcorte",
+                        },
+                      },
+                      [_vm._v("Registro Sala")]
+                    ),
+                  ],
+                  1
+                ),
               ]),
               _vm._v(" "),
               _vm._m(2),
@@ -51792,7 +51765,7 @@ var staticRenderFns = [
     return _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
       _c("img", {
         attrs: {
-          src: "https://vuejs.org/images/logo.svg",
+          src: "img/icons8-plant-64.png",
           alt: "",
           width: "30",
           height: "24",
@@ -51970,11 +51943,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: {
-                          type: "date",
-                          id: "fecharegistro",
-                          value: "cutcontrol.fecharegistro",
-                        },
+                        attrs: { type: "date", id: "fecharegistro" },
                         domProps: { value: _vm.cutcontrol.fecharegistro },
                         on: {
                           input: function ($event) {

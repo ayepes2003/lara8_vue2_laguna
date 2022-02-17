@@ -99,6 +99,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -108,7 +138,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     console.log(process.env.VUE_APP_RUTA_API);
-    this.list();
+    this.list(); //  this.conwebsocket();
   },
   data: function data() {
     return {
@@ -133,28 +163,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: {},
   methods: {
-    openDialog: function openDialog() {
-      this.visible = true; // Controla explícitamente el diálogo a través de los datos
+    sendMessage: function sendMessage(message) {
+      console.log(this.connection);
+      this.connection.send(message);
     },
-    list: function list() {
+    conwebsocket: function conwebsocket() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var api_url, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // console.log(this.$route);
-                api_url = "/api/v1/cutcontrols";
-                _context.next = 3;
-                return axios.get(api_url);
+                console.log("Starting connection to WebSocket Server");
+                _this.connection = new WebSocket("ws://172.16.10.173:81/");
 
-              case 3:
-                res = _context.sent;
-                _this.cutcontrols = res.data;
+                _this.connection.onmessage = function (event) {
+                  console.log(event.data);
+                };
 
-              case 5:
+                _this.connection.onopen = function (event) {
+                  console.log(event);
+                  console.log("Successfully connected to the echo websocket server...");
+                };
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -162,26 +195,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    openModal: function openModal() {
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.modal = 1;
+    list: function list() {
+      var _this2 = this;
 
-      if (this.update) {
-        this.titleModal = "Modificar Contacto";
-      } else {
-        this.id = 0;
-        this.titleModal = "Crear Datos para Tipo Empaque";
-        this.cutcontrol.fecharegistro = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("yyyy-MM-dd");
-        this.cutcontrol.cortador = "";
-        this.cutcontrol.product = "";
-        this.cutcontrol.qtyempaque = 0;
-        this.cutcontrol.qtybolsa = 0;
-        this.cutcontrol.peso_bolsa = 0;
-        this.cutcontrol.total_peso = 0;
-      }
-    },
-    closeModal: function closeModal() {
-      this.modal = 0;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var api_url, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // console.log(this.$route);
+                api_url = "/api/v1/cutcontrols";
+                _context2.next = 3;
+                return axios.get(api_url);
+
+              case 3:
+                res = _context2.sent;
+                _this2.cutcontrols = res.data.data;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     customFormatter: function customFormatter(date) {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("yyyy-MM-dd");
@@ -699,6 +737,53 @@ var render = function () {
       _vm._v("Trabajo Diario Corte"),
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "col-12 mb-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { type: "button" },
+          on: {
+            click: function ($event) {
+              _vm.websocket = false
+              _vm.conwebsocket()
+            },
+          },
+        },
+        [_vm._v("\n            Conection Bascula\n        ")]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 mb-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { type: "button" },
+          on: {
+            click: function ($event) {
+              return _vm.sendMessage("poweron")
+            },
+          },
+        },
+        [_vm._v("\n            Peso\n        ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button" },
+          on: {
+            click: function ($event) {
+              return _vm.sendMessage("poweroff")
+            },
+          },
+        },
+        [_vm._v("\n            PowerOff\n        ")]
+      ),
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "col-12 mb-2" },
@@ -769,17 +854,7 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-footer" },
-      [
-        _c("pagination", {
-          attrs: { data: _vm.products },
-          on: { "pagination-change-page": _vm.getResults },
-        }),
-      ],
-      1
-    ),
+    _c("div", { staticClass: "card-footer" }),
   ])
 }
 var staticRenderFns = [

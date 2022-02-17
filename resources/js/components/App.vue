@@ -3,9 +3,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-                    <!-- llamamos al logo de Vue -->
                     <img
-                        src="https://vuejs.org/images/logo.svg"
+                        src="img/icons8-plant-64.png"
                         alt=""
                         width="30"
                         height="24"
@@ -82,6 +81,22 @@
                                 to="/controlcorte"
                                 class="nav-link"
                                 >Control Corte</router-link
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <router-link
+                                exact-active-class="active"
+                                to="/controlcorte"
+                                class="nav-link"
+                                >Registro Corte</router-link
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <router-link
+                                exact-active-class="active"
+                                to="/controlcorte"
+                                class="nav-link"
+                                >Registro Sala</router-link
                             >
                         </li>
                     </ul>

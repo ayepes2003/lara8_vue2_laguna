@@ -1,0 +1,40 @@
+
+  // Validaciones
+            /*
+            if (!this.cutcontrol.fecharegistro) {
+                this.customAlert("Debe indicar una fecha de registro.", "warn");
+                return;
+            }
+            if (!this.cutcontrol.datoscortador) {
+                this.customAlert("Debe indicar un cortador.", "warn");
+                return;
+            }
+            if (!this.cutcontrol.datospacking) {
+                this.customAlert("Debe indicar un packig.", "warn");
+                return;
+            }
+
+            if (!this.cutcontrol.datoslote) {
+                this.customAlert("Debe indicar un lote.", "warn");
+                return;
+            }
+
+            if (!this.cutcontrol.datosproduct) {
+                this.customAlert("Debe indicar un producto.", "warn");
+                return;
+            }
+
+            if (!this.cutcontrol.datosbolsa) {
+                this.customAlert("Debe indicar el dato de la bolsa.", "warn");
+                return;
+            }
+
+            if (
+                !this.cutcontrol.qtybolsa ||
+                this.cutcontrol.qtybolsa < 1 ||
+                this.cutcontrol.qtybolsa > 99
+            ) {
+                this.customAlert("Cantidad Bolsa Errada", "warn");
+                return;
+            }
+*/

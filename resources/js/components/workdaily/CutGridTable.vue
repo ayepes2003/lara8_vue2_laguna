@@ -2,6 +2,36 @@
     <div>
         <h1 class="text-center text-success">Trabajo Diario Corte</h1>
         <div class="col-12 mb-2">
+            <button
+                @click="
+                    websocket = false;
+                    conwebsocket();
+                "
+                type="button"
+                class="btn btn-primary"
+            >
+                Conection Bascula
+            </button>
+        </div>
+        <div class="col-12 mb-2">
+            <button
+                @click="sendMessage('poweron')"
+                type="button"
+                class="btn btn-success"
+            >
+                Peso
+            </button>
+
+            <button
+                @click="sendMessage('poweroff')"
+                type="button"
+                class="btn btn-danger"
+            >
+                PowerOff
+            </button>
+        </div>
+
+        <div class="col-12 mb-2">
             <!-- llamamos al componente para Crear   -->
             <router-link
                 :to="{ name: 'formcutcontrol' }"
@@ -66,10 +96,10 @@
             </tbody>
         </table>
         <div class="card-footer">
-            <pagination
+            <!-- <pagination
                 :data="products"
                 @pagination-change-page="getResults"
-            ></pagination>
+            ></pagination> -->
         </div>
     </div>
 </template>
@@ -86,6 +116,7 @@ export default {
     created() {
         console.log(process.env.VUE_APP_RUTA_API);
         this.list();
+        //  this.conwebsocket();
     },
     data() {
         return {
@@ -110,37 +141,29 @@ export default {
     },
     props: {},
     methods: {
-        openDialog() {
-            this.visible = true; // Controla explícitamente el diálogo a través de los datos
+        sendMessage: function (message) {
+            console.log(this.connection);
+            this.connection.send(message);
         },
+        async conwebsocket() {
+            console.log("Starting connection to WebSocket Server");
+            this.connection = new WebSocket("ws://172.16.10.173:81/");
+            this.connection.onmessage = function (event) {
+                console.log(event.data);
+            };
 
+            this.connection.onopen = function (event) {
+                console.log(event);
+                console.log(
+                    "Successfully connected to the echo websocket server..."
+                );
+            };
+        },
         async list() {
             // console.log(this.$route);
             const api_url = "/api/v1/cutcontrols";
             const res = await axios.get(api_url);
-            this.cutcontrols = res.data;
-        },
-
-        openModal(data = {}) {
-            this.modal = 1;
-            if (this.update) {
-                this.titleModal = "Modificar Contacto";
-            } else {
-                this.id = 0;
-                this.titleModal = "Crear Datos para Tipo Empaque";
-                this.cutcontrol.fecharegistro = moment(new Date()).format(
-                    "yyyy-MM-dd"
-                );
-                this.cutcontrol.cortador = "";
-                this.cutcontrol.product = "";
-                this.cutcontrol.qtyempaque = 0;
-                this.cutcontrol.qtybolsa = 0;
-                this.cutcontrol.peso_bolsa = 0;
-                this.cutcontrol.total_peso = 0;
-            }
-        },
-        closeModal() {
-            this.modal = 0;
+            this.cutcontrols = res.data.data;
         },
         customFormatter(date) {
             return moment(date).format("yyyy-MM-dd");

@@ -19,7 +19,6 @@
                                         type="date"
                                         class="form-control"
                                         id="fecharegistro"
-                                        value="cutcontrol.fecharegistro"
                                     />
                                     <!-- <datepicker
                                         :bootstrap-styling="true"
@@ -27,7 +26,7 @@
                                         :format="customFormatter"
                                         :language="en"
                                         :disabled-dates="{ to: new Date() }"
-                                        v-model="cutcontrol.fecharegistro"
+                                        v-model="cutcontrol.datosfecharegistro"
                                         :required="true"
                                     >
                                     </datepicker> -->
@@ -64,17 +63,7 @@
                                         requerid
                                     />
                                 </div>
-                                <!-- <div class="form-group mb-3">
-                                    <label for="cutcontrol.qtyempaque"
-                                        >No Empaque</label
-                                    >
-                                    <input
-                                        v-model="cutcontrol.qtyempaque"
-                                        value="1"
-                                        class="form-control"
-                                        id="qtyempaque"
-                                    />
-                                </div> -->
+
                                 <div class="form-group mb-3">
                                     <label for="lote1"
                                         >No Lote {{ datoslote.text }}</label
@@ -243,8 +232,9 @@ export default {
         console.log(process.env.VUE_APP_RUTA_API);
     },
     methods: {
+        beforeUpdate() {},
         customFormatter(date) {
-            return moment(date).format("yyyy-MM-dd");
+            return moment(date).format("yyyy-MM-d");
         },
 
         async closeModal() {
@@ -252,45 +242,8 @@ export default {
         },
 
         async crear() {
-            // Validaciones
-            if (!this.cutcontrol.fecharegistro) {
-                this.customAlert("Debe indicar una fecha de registro.", "warn");
-                return;
-            }
-            if (!this.cutcontrol.datoscortador) {
-                this.customAlert("Debe indicar un cortador.", "warn");
-                return;
-            }
-            if (!this.cutcontrol.datospacking) {
-                this.customAlert("Debe indicar un packig.", "warn");
-                return;
-            }
-
-            if (!this.cutcontrol.datoslote) {
-                this.customAlert("Debe indicar un lote.", "warn");
-                return;
-            }
-
-            if (!this.cutcontrol.datosproduct) {
-                this.customAlert("Debe indicar un producto.", "warn");
-                return;
-            }
-
-            if (!this.cutcontrol.datosbolsa) {
-                this.customAlert("Debe indicar el dato de la bolsa.", "warn");
-                return;
-            }
-
-            if (
-                !this.cutcontrol.qtybolsa ||
-                this.cutcontrol.qtybolsa < 1 ||
-                this.cutcontrol.qtybolsa > 99
-            ) {
-                this.customAlert("Cantidad Bolsa Errada", "warn");
-                return;
-            }
-
             // custom request
+
             this.cutcontrol.cortador = this.cutcontrol.datoscortador.value;
             this.cutcontrol.lote = this.cutcontrol.datoslote.text;
             this.cutcontrol.empaque = this.cutcontrol.datospacking.text;
@@ -301,12 +254,13 @@ export default {
                 this.cutcontrol.qtybolsa * this.cutcontrol.peso_bolsa;
 
             await this.axios
-                .post("/api/cutcontrols", this.cutcontrol)
+                .post("/api/v1/cutcontrols", this.cutcontrol)
                 .then((response) => {
                     if (response.data.code == 200) {
-                        this.customAlert(response.data.message, "success");
+                        this.customAlert(response.data.message, "\n success");
                         this.cutcontrol.datosbolsa = null;
                         this.cutcontrol.qtybolsa = null;
+                        this.cutcontrol.fecharegistro = new date();
                     } else {
                         this.customAlert(response.data.message, "error");
                     }
@@ -327,10 +281,10 @@ export default {
     },
     computed: {
         validateForm() {
-            if (!this.cutcontrol.fecharegistro) {
-                // this.customAlert("Debe indicar una fecha de registro.")
-                return false;
-            }
+            // if (!this.cutcontrol.fecharegistro) {
+            //     // this.customAlert("Debe indicar una fecha de registro.")
+            //     return false;
+            // }
             if (!this.cutcontrol.datoscortador) {
                 // this.customAlert("Debe indicar un cortador.")
                 return false;

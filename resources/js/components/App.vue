@@ -86,7 +86,7 @@
                         <li class="nav-item">
                             <router-link
                                 exact-active-class="active"
-                                to="/controlcorte"
+                                to="/formcutcontrol"
                                 class="nav-link"
                                 >Registro Corte</router-link
                             >
@@ -94,7 +94,7 @@
                         <li class="nav-item">
                             <router-link
                                 exact-active-class="active"
-                                to="/controlcorte"
+                                to="/FormSalaControl"
                                 class="nav-link"
                                 >Registro Sala</router-link
                             >

@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="contact in contacts" :key="contact.id">
+                <!-- <tr v-for="contact in contacts" :key="contact.id">
                     <th scope="row">{{ contact.id }}</th>
                     <td>{{ contact.first_name }}</td>
                     <td>{{ contact.last_name }}</td>
@@ -50,7 +50,7 @@
                             >Eliminar</Button
                         >
                     </td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>

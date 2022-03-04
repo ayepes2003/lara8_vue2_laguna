@@ -15,6 +15,9 @@ const SalaControl = () => import("./components/workdaily/SalaGridTable.vue");
 const FormCutControl = () =>
     import("./components/workdaily/FormCutControl.vue");
 
+const FormSalaControl = () =>
+    import("./components/workdaily/FormSalaControl.vue");
+
 export const routes = [
     {
         name: "home",
@@ -31,6 +34,12 @@ export const routes = [
         path: "/formcutcontrol",
         component: FormCutControl,
     },
+    {
+        name: "FormSalaControl",
+        path: "/FormSalaControl",
+        component: FormSalaControl,
+    },
+
     {
         name: "controlcorte",
         path: "/controlcorte",

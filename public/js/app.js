@@ -5617,6 +5617,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5685,16 +5703,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {},
+  activated: function activated() {
+    this.conwebsocketcket();
+  },
   created: function created() {},
   mounted: function mounted() {
     console.log(process.env.VUE_APP_RUTA_API);
   },
   methods: {
-    beforeUpdate: function beforeUpdate() {},
-    customFormatter: function customFormatter(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("yyyy-MM-d");
+    sendMessage: function sendMessage(message) {
+      console.log(this.connection);
+      this.connection.send(message);
     },
-    closeModal: function closeModal() {
+    conwebsocket: function conwebsocket() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -5702,11 +5723,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$router.push({
-                  name: "controlcorte"
-                });
+                console.log("Starting connection to WebSocket Server");
+                _this.connection = new WebSocket("ws://172.16.10.173:81/");
 
-              case 1:
+                _this.connection.onmessage = function (event) {
+                  console.log(event.data);
+                };
+
+                _this.connection.onopen = function (event) {
+                  console.log(event);
+                  console.log("Successfully connected to the echo websocket server...");
+                };
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -5714,7 +5743,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    crear: function crear() {
+    beforeUpdate: function beforeUpdate() {},
+    customFormatter: function customFormatter(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format("yyyy-MM-d");
+    },
+    closeModal: function closeModal() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -5722,24 +5755,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // custom request
-                _this2.cutcontrol.cortador = _this2.cutcontrol.datoscortador.value;
-                _this2.cutcontrol.lote = _this2.cutcontrol.datoslote.text;
-                _this2.cutcontrol.empaque = _this2.cutcontrol.datospacking.text;
-                _this2.cutcontrol.product = _this2.cutcontrol.datosproduct.text;
-                _this2.cutcontrol.peso_bolsa = _this2.cutcontrol.datosbolsa.text;
-                _this2.cutcontrol.qtyempaque = 1;
-                _this2.cutcontrol.total_peso = _this2.cutcontrol.qtybolsa * _this2.cutcontrol.peso_bolsa;
-                _context2.next = 9;
-                return _this2.axios.post("/api/v1/cutcontrols", _this2.cutcontrol).then(function (response) {
-                  if (response.data.code == 200) {
-                    _this2.customAlert(response.data.message, "\n success");
+                _this2.$router.push({
+                  name: "controlcorte"
+                });
 
-                    _this2.cutcontrol.datosbolsa = null;
-                    _this2.cutcontrol.qtybolsa = null;
-                    _this2.cutcontrol.fecharegistro = new date();
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    crear: function crear() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                // custom request
+                _this3.cutcontrol.cortador = _this3.cutcontrol.datoscortador.value;
+                _this3.cutcontrol.lote = _this3.cutcontrol.datoslote.text;
+                _this3.cutcontrol.empaque = _this3.cutcontrol.datospacking.text;
+                _this3.cutcontrol.product = _this3.cutcontrol.datosproduct.text;
+                _this3.cutcontrol.peso_bolsa = _this3.cutcontrol.datosbolsa.text;
+                _this3.cutcontrol.qtyempaque = 1;
+                _this3.cutcontrol.total_peso = _this3.cutcontrol.qtybolsa * _this3.cutcontrol.peso_bolsa;
+                _context3.next = 9;
+                return _this3.axios.post("/api/v1/cutcontrols", _this3.cutcontrol).then(function (response) {
+                  if (response.data.code == 200) {
+                    _this3.customAlert(response.data.message, "\n success");
+
+                    _this3.cutcontrol.datosbolsa = null;
+                    _this3.cutcontrol.qtybolsa = null;
+                    _this3.cutcontrol.fecharegistro = new date();
                   } else {
-                    _this2.customAlert(response.data.message, "error");
+                    _this3.customAlert(response.data.message, "error");
                   }
 
                   console.log(response.data);
@@ -5749,10 +5802,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 9:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     customAlert: function customAlert(str, type) {
@@ -5760,7 +5813,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         type: type,
         title: "Sistema agroOnline",
         text: str
-      }); // alert(str);
+      });
     }
   }
 }, "computed", {
@@ -5954,6 +6007,10 @@ var FormCutControl = function FormCutControl() {
   return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./components/workdaily/FormCutControl.vue */ "./resources/js/components/workdaily/FormCutControl.vue"));
 };
 
+var FormSalaControl = function FormSalaControl() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_workdaily_FormSalaControl_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/workdaily/FormSalaControl.vue */ "./resources/js/components/workdaily/FormSalaControl.vue"));
+};
+
 var routes = [{
   name: "home",
   path: "/",
@@ -5966,6 +6023,10 @@ var routes = [{
   name: "formcutcontrol",
   path: "/formcutcontrol",
   component: FormCutControl
+}, {
+  name: "FormSalaControl",
+  path: "/FormSalaControl",
+  component: FormSalaControl
 }, {
   name: "controlcorte",
   path: "/controlcorte",
@@ -51718,7 +51779,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: {
                           "exact-active-class": "active",
-                          to: "/controlcorte",
+                          to: "/formcutcontrol",
                         },
                       },
                       [_vm._v("Registro Corte")]
@@ -51737,7 +51798,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: {
                           "exact-active-class": "active",
-                          to: "/controlcorte",
+                          to: "/FormSalaControl",
                         },
                       },
                       [_vm._v("Registro Sala")]
@@ -51909,6 +51970,55 @@ var render = function () {
       "div",
       { staticClass: "col-12" },
       [
+        _c("h1", { staticClass: "text-center text-success" }, [
+          _vm._v("\n            Registro Diario Por Cortador\n        "),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 mb-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  _vm.websocket = false
+                  _vm.conwebsocket()
+                },
+              },
+            },
+            [_vm._v("\n                Bascula\n            ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.sendMessage("poweron")
+                },
+              },
+            },
+            [_vm._v("\n                PowerOn\n            ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.sendMessage("poweroff")
+                },
+              },
+            },
+            [_vm._v("\n                PowerOff\n            ")]
+          ),
+        ]),
+        _vm._v(" "),
         _c("notifications", { attrs: { position: "top center" } }),
         _vm._v(" "),
         _c("div", { staticClass: "card" }, [
@@ -52083,40 +52193,9 @@ var render = function () {
                       1
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group mb-3" },
-                      [
-                        _c("label", { attrs: { for: "peso_bolsa" } }, [
-                          _vm._v(
-                            "Peso Bolsa\n                                    " +
-                              _vm._s(_vm.datosbolsa.text) +
-                              " gr"
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("VSelect", {
-                          attrs: {
-                            defaultTitle: "Seleccione Peso Bolsa",
-                            options: _vm.weight_box,
-                            id: "peso_bolsa",
-                            requerid: "",
-                          },
-                          model: {
-                            value: _vm.cutcontrol.datosbolsa,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.cutcontrol, "datosbolsa", $$v)
-                            },
-                            expression: "cutcontrol.datosbolsa",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
                     _c("div", { staticClass: "form-group mb-3" }, [
                       _c("label", { attrs: { for: "qtybolsa" } }, [
-                        _vm._v("Cantidad Bolsa"),
+                        _vm._v("Peso"),
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -52195,9 +52274,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h4", { staticClass: "text-danger" }, [
-        _vm._v("Crear Registro Corte"),
-      ]),
+      _c("h4", { staticClass: "text-danger" }, [_vm._v("Datos")]),
     ])
   },
 ]
@@ -71924,7 +72001,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_layout_Header_vue":1,"resources_js_components_layout_Home_vue":1,"resources_js_components_contacto_Contacto_vue":1,"resources_js_components_blog_Mostrar_vue":1,"resources_js_components_blog_Crear_vue":1,"resources_js_components_blog_Editar_vue":1,"resources_js_components_products_Products_vue":1,"resources_js_components_workdaily_CutGridTable_vue":1,"resources_js_components_workdaily_SalaGridTable_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_layout_Header_vue":1,"resources_js_components_layout_Home_vue":1,"resources_js_components_contacto_Contacto_vue":1,"resources_js_components_blog_Mostrar_vue":1,"resources_js_components_blog_Crear_vue":1,"resources_js_components_blog_Editar_vue":1,"resources_js_components_products_Products_vue":1,"resources_js_components_workdaily_CutGridTable_vue":1,"resources_js_components_workdaily_SalaGridTable_vue":1,"resources_js_components_workdaily_FormSalaControl_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

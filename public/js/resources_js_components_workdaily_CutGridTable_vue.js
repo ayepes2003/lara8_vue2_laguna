@@ -99,36 +99,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -736,69 +706,6 @@ var render = function () {
     _c("h1", { staticClass: "text-center text-success" }, [
       _vm._v("Trabajo Diario Corte"),
     ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-12 mb-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { type: "button" },
-          on: {
-            click: function ($event) {
-              _vm.websocket = false
-              _vm.conwebsocket()
-            },
-          },
-        },
-        [_vm._v("\n            Conection Bascula\n        ")]
-      ),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-12 mb-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: { type: "button" },
-          on: {
-            click: function ($event) {
-              return _vm.sendMessage("poweron")
-            },
-          },
-        },
-        [_vm._v("\n            Peso\n        ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger",
-          attrs: { type: "button" },
-          on: {
-            click: function ($event) {
-              return _vm.sendMessage("poweroff")
-            },
-          },
-        },
-        [_vm._v("\n            PowerOff\n        ")]
-      ),
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-12 mb-2" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "btn btn-success",
-            attrs: { to: { name: "formcutcontrol" } },
-          },
-          [_vm._v("\n            Nuevo Registro")]
-        ),
-      ],
-      1
-    ),
     _vm._v(" "),
     _c("table", { staticClass: "table table-striped table-hover" }, [
       _vm._m(0),

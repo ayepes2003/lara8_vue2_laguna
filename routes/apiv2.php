@@ -12,15 +12,4 @@ use App\Http\Controllers\CutControlController;
 //Route::apiresource('blog', App\Http\Controllers\BlogController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
 
-Route::apiresource('cutcontrols', App\Http\Controllers\CutControlController::class)->only([
-    'index', 'store', 'show', 'update', 'destroy'
-
-]);
-
-
-Route::group(['prefix' => 'cut'], function () {
-    Route::post('create', [CutControlController::class, 'store']);
-    Route::get('list', [CutControlController::class, 'index']);
-    Route::get('{page}/{limit}', [CutControlController::class, 'get']);
-    Route::get('transdate', [CutControlController::class, 'register_transdate']);
-});
+// cls

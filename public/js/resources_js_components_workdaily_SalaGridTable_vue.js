@@ -183,62 +183,7 @@ var render = function () {
       [_vm._v("\n        Nuevo Registro\n    ")]
     ),
     _vm._v(" "),
-    _c("table", { staticClass: "table table-striped table-hover" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.contacts, function (contact) {
-          return _c("tr", { key: contact.id }, [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(contact.id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.first_name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.last_name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.email))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.phone))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(contact.address))]),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c(
-                  "Button",
-                  {
-                    staticClass: "btn btn-warning",
-                    on: {
-                      click: function ($event) {
-                        _vm.update = true
-                        _vm.openModal(contact)
-                      },
-                    },
-                  },
-                  [_vm._v("Editar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "Button",
-                  {
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function ($event) {
-                        return _vm.eliminar(contact.id)
-                      },
-                    },
-                  },
-                  [_vm._v("Eliminar")]
-                ),
-              ],
-              1
-            ),
-          ])
-        }),
-        0
-      ),
-    ]),
+    _vm._m(0),
   ])
 }
 var staticRenderFns = [
@@ -246,34 +191,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Registro")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cortador")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Lote")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Empaque")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Producto")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad Empaque")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad Bolsa")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Peso Bolsa")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total Peso")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-center", attrs: { scope: "col", colspan: "2" } },
-          [_vm._v("Acción")]
-        ),
+    return _c("table", { staticClass: "table table-striped table-hover" }, [
+      _c("thead", { staticClass: "thead-dark" }, [
+        _c("tr", [
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Registro")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cortador")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Lote")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Empaque")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Producto")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad Empaque")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad Bolsa")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Peso Bolsa")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Total Peso")]),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass: "text-center",
+              attrs: { scope: "col", colspan: "2" },
+            },
+            [_vm._v("Acción")]
+          ),
+        ]),
       ]),
+      _vm._v(" "),
+      _c("tbody"),
     ])
   },
 ]

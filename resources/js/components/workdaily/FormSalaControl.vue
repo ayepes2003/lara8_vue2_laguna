@@ -1,9 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center text-success">
-                Registro Diario Por Cortador
-            </h1>
+            <h1 class="text-center text-success">Registro Diario En Sala</h1>
             <div class="col-12 mb-2">
                 <button
                     @click="
@@ -20,7 +18,7 @@
                     type="button"
                     class="btn btn-success"
                 >
-                    PowerOn
+                    Peso
                 </button>
 
                 <button
@@ -119,9 +117,21 @@
                                         requerid
                                     />
                                 </div>
-
                                 <div class="form-group mb-3">
-                                    <label for="qtybolsa">Peso</label>
+                                    <label for="peso_bolsa"
+                                        >Peso Bolsa
+                                        {{ datosbolsa.text }} gr</label
+                                    >
+                                    <VSelect
+                                        v-model="cutcontrol.datosbolsa"
+                                        defaultTitle="Seleccione Peso Bolsa"
+                                        :options="weight_box"
+                                        id="peso_bolsa"
+                                        requerid
+                                    />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="qtybolsa">Cantidad Bolsa</label>
                                     <input
                                         v-model="cutcontrol.qtybolsa"
                                         type="number"
@@ -162,7 +172,7 @@ import Datepicker from "vuejs-datepicker";
 import VSelect from "vue-select-picker-bootstrap";
 
 export default {
-    name: "formcutcontrol",
+    name: "FormSalaControl",
     components: {
         Datepicker,
         VSelect,

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCutcontrolTable extends Migration
+class CreatePivoteRfidEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateCutcontrolTable extends Migration
      */
     public function up()
     {
-        Schema::create('cut_controls', function (Blueprint $table) {
+        Schema::create('pivote_rfid_employees', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('employees_id')->constrained();
+            $table->foreignId('rfidcards_id')->constrained();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateCutcontrolTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cutcontrol');
+        Schema::dropIfExists('pivote_rfid_employees');
     }
 }

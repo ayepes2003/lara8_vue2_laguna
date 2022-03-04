@@ -1,45 +1,15 @@
 <template>
     <div>
         <h1 class="text-center text-success">Trabajo Diario Corte</h1>
-        <div class="col-12 mb-2">
-            <button
-                @click="
-                    websocket = false;
-                    conwebsocket();
-                "
-                type="button"
-                class="btn btn-primary"
-            >
-                Conection Bascula
-            </button>
-        </div>
-        <div class="col-12 mb-2">
-            <button
-                @click="sendMessage('poweron')"
-                type="button"
-                class="btn btn-success"
-            >
-                Peso
-            </button>
 
-            <button
-                @click="sendMessage('poweroff')"
-                type="button"
-                class="btn btn-danger"
-            >
-                PowerOff
-            </button>
-        </div>
-
-        <div class="col-12 mb-2">
-            <!-- llamamos al componente para Crear   -->
+        <!-- <div class="col-12 mb-2">
             <router-link
                 :to="{ name: 'formcutcontrol' }"
                 class="btn btn-success"
             >
                 Nuevo Registro</router-link
             >
-        </div>
+        </div> -->
 
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
